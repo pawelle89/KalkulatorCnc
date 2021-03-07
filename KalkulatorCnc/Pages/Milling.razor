@@ -1,0 +1,76 @@
+﻿@page "/milling"
+
+<h1>Frezowanie</h1>
+
+<p>
+    Prędkość obrotowa: @spindleSpeed
+    <EditForm Model="@spindleSpeed">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <InputNumber id="name" @bind-Value="spindleSpeed" />
+
+        <button class="btn btn-primary" @onclick="SpindleSpeed">Oblicz</button>
+    </EditForm>
+ 
+
+    
+</p>
+<p>
+    Prędkość Skrawania: @cuttingSpeed
+    <EditForm Model="@cuttingSpeed">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <InputNumber id="name" @bind-Value="cuttingSpeed" />
+
+        <button class="btn btn-primary" @onclick="CuttingSpeed">Oblicz</button>
+    </EditForm>
+
+
+    
+</p>
+<p>
+    Średnica narzędzia: @diameter
+    <EditForm Model="@diameter">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <InputNumber id="name" @bind-Value="diameter" />
+
+        <button class="btn btn-primary" @onclick="Diameter">Oblicz</button>
+    </EditForm>
+
+
+
+</p>
+
+
+
+@code {
+
+    private double cuttingSpeed = 1;
+    private double spindleSpeed = 1;
+    private double diameter = 1;
+    private double numberOfFlultes = 1;
+    private double feed = 1;
+    private double feedPerTooth = 1;
+
+    private string name;
+
+    private void SpindleSpeed()
+    {
+        spindleSpeed = cuttingSpeed / Math.PI / diameter * 1000;
+        spindleSpeed = Math.Round(spindleSpeed, 0);
+    }
+    private void CuttingSpeed()
+    {
+        cuttingSpeed = Math.PI * diameter * spindleSpeed / 1000;
+        cuttingSpeed = Math.Round(cuttingSpeed, 0);
+    }
+    private void Diameter()
+    {
+        diameter = (cuttingSpeed * 1000)/ (Math.PI * spindleSpeed);
+        diameter = Math.Round(diameter,1);
+    }
+}
