@@ -3,6 +3,17 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
 
 a, .btn-link {
     color: #0366d6;
@@ -180,4 +191,5 @@ app {
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
+    
 }

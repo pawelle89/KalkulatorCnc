@@ -1,62 +1,52 @@
 ﻿@page "/milling"
 
-<h1>Frezowanie</h1>
-
-<p>
-    Prędkość obrotowa: @spindleSpeed
-    <EditForm Model="@spindleSpeed">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-
-        <InputNumber id="name" @bind-Value="spindleSpeed" />
-
-        <button class="btn btn-primary" @onclick="SpindleSpeed">Oblicz</button>
-    </EditForm>
- 
-
-    
-</p>
-<p>
-    Prędkość Skrawania: @cuttingSpeed
+<h1 class="card-title">Frezowanie</h1>
     <EditForm Model="@cuttingSpeed">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-
-        <InputNumber id="name" @bind-Value="cuttingSpeed" />
-
-        <button class="btn btn-primary" @onclick="CuttingSpeed">Oblicz</button>
+        <table class="table table-striped w-auto">
+            <tr>
+                <td>Średnica narzędzia =</td>
+                <td><InputNumber class="form-control" id="name" @bind-Value="diameter" placeholder="mm"/></td>
+                <td><button class="btn btn-outline-secondary btn-sm" @onclick="Diameter">Oblicz</button></td>
+            </tr>
+            <tr>
+                <td>Prędkość Skrawania Vcc =</td>
+                <td><InputNumber class="form-control" id="name" @bind-Value="cuttingSpeed" placeholder="m/s"/></td>
+                <td><button class="btn btn-outline-secondary btn-sm" @onclick="CuttingSpeed">Oblicz</button></td>
+            </tr>
+            <tr>
+                <td>Prędkość obrotowa wrzeciona S =</td>
+                <td><InputNumber class="form-control" id="name" @bind-Value="spindleSpeed" placeholder="obr/min"/></td>
+                <td><button class="btn btn-outline-secondary btn-sm" @onclick="SpindleSpeed">Oblicz</button></td>
+            </tr>
+            <tr>
+                <td>Ilość zębów =</td>
+                <td><InputNumber class="form-control" id="name" @bind-Value="numberOfTeeth"/></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Posuw na ząb =</td>
+                <td><InputNumber class="form-control" id="name" @bind-Value="feedPerTooth" placeholder="mm/ząb"/></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Posuw =</td>
+                <td><InputNumber class="form-control" id="name" @bind-Value="feed" placeholder="mm/min"/></td>
+                <td><button class="btn btn-outline-secondary btn-sm" @onclick="Feed">Oblicz</button></td>
+            </tr>
+        </table>
     </EditForm>
 
-
-    
-</p>
-<p>
-    Średnica narzędzia: @diameter
-    <EditForm Model="@diameter">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-
-        <InputNumber id="name" @bind-Value="diameter" />
-
-        <button class="btn btn-primary" @onclick="Diameter">Oblicz</button>
-    </EditForm>
-
-
-
-</p>
 
 
 
 @code {
 
-    private double cuttingSpeed = 1;
-    private double spindleSpeed = 1;
-    private double diameter = 1;
-    private double numberOfFlultes = 1;
-    private double feed = 1;
-    private double feedPerTooth = 1;
-
-    private string name;
+    private double cuttingSpeed = 20;
+    private double spindleSpeed = 318;
+    private double diameter = 20;
+    private double numberOfTeeth = 4;
+    private double feed = 203.5;
+    private double feedPerTooth = 0.16;
 
     private void SpindleSpeed()
     {
@@ -73,4 +63,10 @@
         diameter = (cuttingSpeed * 1000)/ (Math.PI * spindleSpeed);
         diameter = Math.Round(diameter,1);
     }
+    private void Feed()
+    {
+        feed = feedPerTooth * numberOfTeeth * spindleSpeed;
+        feed = Math.Round(feed, 1);
+    }
+
 }
