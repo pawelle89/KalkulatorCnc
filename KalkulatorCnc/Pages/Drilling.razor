@@ -1,0 +1,53 @@
+﻿@page "/drilling"
+
+@using KalkulatorCnc.Data
+@using System.Timers
+@using DataAccessLibrary
+@using DataAccessLibrary.Models
+@inject IToolData _db
+
+<h3>Wiercenie</h3>
+
+<h4>Moje narzędzia</h4>
+
+@if (tool is null)
+            {
+                <p><em>Loading...</em></p>
+}
+else
+            {
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Średnica</th>
+            <th>Vcc</th>
+            <th>Obroty</th>
+            <th>Posuw na obrót</th>
+            <th>Posuw</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var tools in tool)
+                {
+        <tr>
+            <td>@tools.toolName</td>
+            <td>@tools.diameter</td>
+            <td>@tools.cuttingSpeed</td>
+            <td>@tools.spindleSpeed</td>
+            <td>@tools.feedPerRevolution</td>
+            <td>@tools.feed</td>
+        </tr>
+                }
+    </tbody>
+</table>
+            }
+
+@code {
+    private List<ToolModel> tool;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tool = await _db.GetTool();
+    }
+}

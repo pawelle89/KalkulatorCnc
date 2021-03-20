@@ -1,7 +1,10 @@
-﻿@page "/milling"
+﻿@page "/Milling"
+@using KalkulatorCnc.Data
+@using System.Globalization
+@inherits Calc
 
 <h1 class="card-title">Frezowanie</h1>
-    <EditForm Model="@cuttingSpeed">
+    <EditForm Model="@calc">
         <table class="table table-striped w-auto">
             <tr>
                 <td>Średnica narzędzia =</td>
@@ -10,7 +13,7 @@
             </tr>
             <tr>
                 <td>Prędkość Skrawania Vcc =</td>
-                <td><InputNumber class="form-control" id="name" @bind-Value="cuttingSpeed" placeholder="m/s"/></td>
+                <td><InputNumber class="form-control" id="name" @bind-Value="cuttingSpeed"placeholder="m/s"/></td>
                 <td><button class="btn btn-outline-secondary btn-sm" @onclick="CuttingSpeed">Oblicz</button></td>
             </tr>
             <tr>
@@ -25,7 +28,7 @@
             </tr>
             <tr>
                 <td>Posuw na ząb =</td>
-                <td><InputNumber class="form-control" id="name" @bind-Value="feedPerTooth" placeholder="mm/ząb"/></td>
+                <td><InputNumber class="form-control" id="name" @bind-Value="feedPerTooth"placeholder="mm/ząb"/></td>
                 <td></td>
             </tr>
             <tr>
@@ -40,33 +43,5 @@
 
 
 @code {
-
-    private double cuttingSpeed = 20;
-    private double spindleSpeed = 318;
-    private double diameter = 20;
-    private double numberOfTeeth = 4;
-    private double feed = 203.5;
-    private double feedPerTooth = 0.16;
-
-    private void SpindleSpeed()
-    {
-        spindleSpeed = cuttingSpeed / Math.PI / diameter * 1000;
-        spindleSpeed = Math.Round(spindleSpeed, 0);
-    }
-    private void CuttingSpeed()
-    {
-        cuttingSpeed = Math.PI * diameter * spindleSpeed / 1000;
-        cuttingSpeed = Math.Round(cuttingSpeed, 0);
-    }
-    private void Diameter()
-    {
-        diameter = (cuttingSpeed * 1000)/ (Math.PI * spindleSpeed);
-        diameter = Math.Round(diameter,1);
-    }
-    private void Feed()
-    {
-        feed = feedPerTooth * numberOfTeeth * spindleSpeed;
-        feed = Math.Round(feed, 1);
-    }
-
+Calc calc = new Calc();
 }

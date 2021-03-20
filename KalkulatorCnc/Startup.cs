@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataAccessLibrary;
 
 namespace KalkulatorCnc
 {
@@ -29,6 +30,8 @@ namespace KalkulatorCnc
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddTransient<ISqlDataAccess, SqlDataAccess>();
+            services.AddTransient<IToolData, ToolData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
