@@ -24,7 +24,8 @@ namespace DataAccessLibrary
 
         public Task InsertTool(ToolModel tool)
         {
-            string sql = @"insert into dbo.Tool (ToolName, CuttingSpeed, SpindleSpeed, Diameter, NumberOfTeeth, Feed, FeedPerTooth);";
+            string sql = @"insert into [dbo].[Tool] ([ToolName], [Diameter], [CuttingSpeed], [SpindleSpeed], [FeedPerRevolution], [Feed])
+                          values (@ToolName, @Diameter, @CuttingSpeed, @SpindleSpeed, @FeedPerRevolution, @Feed);";
 
             return _db.SaveData(sql, tool);
         }

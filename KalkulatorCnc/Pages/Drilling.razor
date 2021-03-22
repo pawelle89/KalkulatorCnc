@@ -4,11 +4,29 @@
 @using System.Timers
 @using DataAccessLibrary
 @using DataAccessLibrary.Models
+@using KalkulatorCnc.Models
 @inject IToolData _db
 
-<h3>Wiercenie</h3>
+<h1>Wiercenie</h1>
+
+<h4>Dodaj nowe narzędzie</h4>
+
+
+<EditForm Model="@newTool" OnValidSubmit="@InsertTool">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <InputText class="form-control" id="ToolName" @bind-Value="newTool.ToolName" />
+    <InputNumber class="form-control" id="Diamete" @bind-Value="newTool.Diameter" />
+    <InputNumber class="form-control" id="CuttingSpeed" @bind-Value="newTool.CuttingSpeed" />
+    <InputNumber class="form-control" id="SpindleSpee" @bind-Value="newTool.SpindleSpeed" />
+    <InputNumber class="form-control" id="FeedPerRevolution" @bind-Value="newTool.FeedPerRevolution" />
+    <InputNumber class="form-control" id="Feed" @bind-Value="newTool.Feed" />
+    <button type="submit" class="btn btn-primary">Dodaj</button>
+</EditForm>
+
 
 <h4>Moje narzędzia</h4>
+
 
 @if (tool is null)
             {
@@ -31,12 +49,12 @@ else
         @foreach(var tools in tool)
                 {
         <tr>
-            <td>@tools.toolName</td>
-            <td>@tools.diameter</td>
-            <td>@tools.cuttingSpeed</td>
-            <td>@tools.spindleSpeed</td>
-            <td>@tools.feedPerRevolution</td>
-            <td>@tools.feed</td>
+            <td>@tools.ToolName</td>
+            <td>@tools.Diameter</td>
+            <td>@tools.CuttingSpeed</td>
+            <td>@tools.SpindleSpeed</td>
+            <td>@tools.FeedPerRevolution</td>
+            <td>@tools.Feed</td>
         </tr>
                 }
     </tbody>
@@ -45,9 +63,27 @@ else
 
 @code {
     private List<ToolModel> tool;
+    private DisplayToolModel newTool = new DisplayToolModel();
 
     protected override async Task OnInitializedAsync()
     {
         tool = await _db.GetTool();
+    }
+    private async Task InsertTool()
+    {
+        ToolModel t = new ToolModel
+        {
+            ToolName = newTool.ToolName,
+            Diameter = newTool.Diameter,
+            CuttingSpeed = newTool.CuttingSpeed,
+            SpindleSpeed = newTool.SpindleSpeed,
+            FeedPerRevolution = newTool.FeedPerRevolution,
+            Feed = newTool.Feed
+        };
+       await _db.InsertTool(t);
+
+       tool.Add(t);
+
+       newTool = new DisplayToolModel();
     }
 }

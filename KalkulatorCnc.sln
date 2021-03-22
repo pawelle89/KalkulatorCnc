@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KalkulatorCnc", "KalkulatorCnc\KalkulatorCnc.csproj", "{C8601109-3898-4ABA-82B0-9CF3AF1348B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLibrary", "DataAccessLibrary\DataAccessLibrary.csproj", "{713680ED-1C01-48E1-87CD-6732945BB020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLibrary", "DataAccessLibrary\DataAccessLibrary.csproj", "{713680ED-1C01-48E1-87CD-6732945BB020}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

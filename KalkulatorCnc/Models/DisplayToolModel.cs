@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace DataAccessLibrary.Models
+namespace KalkulatorCnc.Models
 {
-    public class ToolModel
+    public class DisplayToolModel
     {
+        [Required]
+        [StringLength(15, ErrorMessage ="Nazwa jest zbyt długa.")]
+        [MinLength(3, ErrorMessage ="Nazwa jest zbyt krótka.")]
         public string ToolName { get; set; }
         public double Diameter { get; set; }
         public double CuttingSpeed { get; set; }
